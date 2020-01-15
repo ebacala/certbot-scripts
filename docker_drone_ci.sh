@@ -29,4 +29,4 @@ docker run \
   --name=drone \
   drone/drone:1
 
-  echo 'Drone CI started on port 8081. Please execute command "./certbot_docker.sh [DOMAIN_NAME] [EMAIL_ADRESS] 8081"'
+  echo 'Drone CI started on port 8081'
