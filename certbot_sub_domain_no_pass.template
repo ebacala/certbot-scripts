@@ -1,0 +1,32 @@
+server {
+        listen 80;
+        server_name ${NGINX_DOMAIN_NAME};
+        return 301 https://$server_name$request_uri;
+}
+server {
+        listen 443 ssl;
+        server_name ${NGINX_DOMAIN_NAME};
+
+        # Certificates
+        ssl_certificate /etc/letsencrypt/live/${NGINX_DOMAIN_NAME}/fullchain.pem;
+        ssl_certificate_key /etc/letsencrypt/live/${NGINX_DOMAIN_NAME}/privkey.pem;
+
+        # Protocol
+        ssl_protocols TLSv1.2;
+
+        # TLS parameters
+        ssl_session_cache shared:SSL:10m;
+        ssl_session_timeout 5m;
+        ssl_session_tickets off;
+
+        # HSTS
+        add_header Strict-Transport-Security "max-age=15552000; includeSubdomains; preload";
+
+        root /var/www/html/${NGINX_REPERTORY};
+        index index.html index.php;
+
+	# Location
+	location / {
+		try_files $uri $uri/ =404;
+	}
+}
