@@ -21,6 +21,8 @@ certbot --nginx certonly -d ${NGINX_DOMAIN_NAME} -m ${NGINX_EMAIL_ADDRESS} --agr
 # Replace the default template file with the environment variables
 envsubst '${NGINX_DOMAIN_NAME} ${NGINX_SUB_DOMAIN_NAME} ${NGINX_APP_PORT}' < certbot_sub_domain.template > /etc/nginx/sites-available/${NGINX_DOMAIN_NAME}
 ln -s /etc/nginx/sites-available/${NGINX_DOMAIN_NAME} /etc/nginx/sites-enabled/${NGINX_DOMAIN_NAME}
+# Copy a new config file
+cp nginx.conf /etc/nginx/nginx.conf
 
 # Reload the nginx configuration
 nginx -s reload
