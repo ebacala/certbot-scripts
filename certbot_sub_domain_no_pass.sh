@@ -19,7 +19,7 @@ export NGINX_REPERTORY=$3
 certbot --nginx certonly -d ${NGINX_DOMAIN_NAME} -m ${NGINX_EMAIL_ADDRESS} --agree-tos --no-eff-email
 
 # Generate new DH parameters
-openssl dhparam -out /etc/letsencrypt/live/${NGINX_DOMAIN_NAME}/dhparam.pem 4096
+openssl dhparam -out /etc/letsencrypt/live/${NGINX_DOMAIN_NAME}/dhparam.pem 2048
 
 # Replace the default template file with the environment variables
 envsubst '${NGINX_DOMAIN_NAME} ${NGINX_SUB_DOMAIN_NAME} ${NGINX_REPERTORY}' < certbot_sub_domain_no_pass.template > /etc/nginx/sites-available/${NGINX_DOMAIN_NAME}
