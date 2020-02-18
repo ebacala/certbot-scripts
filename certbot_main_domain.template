@@ -5,11 +5,23 @@ server {
 }
 
 server {
-    listen 443 ssl;
+    listen 443 ssl http2;
+    server_name ${NGINX_DOMAIN_NAME};
+
+    # Certificates
     ssl_certificate /etc/letsencrypt/live/${NGINX_DOMAIN_NAME}/fullchain.pem;
     ssl_certificate_key /etc/letsencrypt/live/${NGINX_DOMAIN_NAME}/privkey.pem;
-    server_name ${NGINX_DOMAIN_NAME};
-    server_tokens off;
+
+    # Protocol
+    ssl_protocols TLSv1.2;
+
+    # TLS parameters
+    ssl_session_cache shared:SSL:10m;
+    ssl_session_timeout 5m;
+    ssl_session_tickets off;
+
+    # HSTS
+    add_header Strict-Transport-Security "max-age=15552000; includeSubdomains; preload";
  
     location / {
         root /usr/share/nginx/html;
