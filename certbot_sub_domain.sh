@@ -29,3 +29,4 @@ cp nginx.conf /etc/nginx/nginx.conf
 
 # Reload the nginx configuration
 nginx -s reload
+
