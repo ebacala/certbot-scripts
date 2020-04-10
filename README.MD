@@ -5,7 +5,7 @@ Two scripts are provided in this repository :
 -   certbot_sub_domain_port.sh
 -   certbot_sub_domain_static.sh
 
-These scripts use the `certbot` program to generate your SSL certificates.
+These scripts use the `certbot` program to generate your SSL certificates and Nginx as your web server.
 
 ## certbot_sub_domain_port.sh
 
