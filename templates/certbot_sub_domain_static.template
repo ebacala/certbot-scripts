@@ -25,7 +25,7 @@ server {
         # HSTS
         add_header Strict-Transport-Security "max-age=15552000; includeSubdomains; preload";
 
-        root /var/www/html/${NGINX_REPERTORY};
+        root ${NGINX_REPOSITORY};
         index index.html index.php;
 
 	# Location
