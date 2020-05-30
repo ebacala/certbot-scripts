@@ -1,11 +1,11 @@
 #!/bin/bash
 
 echo "Please enter your domain name:"
-read NGINX_DOMAIN_NAME
+read nginx_domain_name
 echo "Please enter your email adress (only used for certbot script):"
-read NGINX_EMAIL_ADDRESS
+read nginx_email_address
 echo "Please enter the repertory that will be used to store the static website (absolute path):"
-read NGINX_REPOSITORY
+read nginx_repository
 
 apt update
 apt install software-properties-common
@@ -15,9 +15,9 @@ apt install -y nginx certbot python3-certbot-nginx
 fuser -k 80/tcp
 service nginx restart
 
-export NGINX_DOMAIN_NAME=NGINX_DOMAIN_NAME
-export NGINX_EMAIL_ADDRESS=NGINX_EMAIL_ADDRESS
-export NGINX_REPOSITORY=NGINX_REPOSITORY
+export NGINX_DOMAIN_NAME=$nginx_domain_name
+export NGINX_EMAIL_ADDRESS=$ginx_email_address
+export NGINX_REPOSITORY=$nginx_repository
 
 # Launch Certbot with the domain name and email address defined in the environment variables
 certbot --nginx certonly -d ${NGINX_DOMAIN_NAME} -m ${NGINX_EMAIL_ADDRESS} --agree-tos --no-eff-email
