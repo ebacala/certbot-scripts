@@ -1,19 +1,23 @@
 #!/bin/bash
 
-if [[ $# -ne 3 ]]; then
-  echo 'You need 3 arguments : your subdomain name (please include your domain), your email adress and the port that needs to be forwarded';
-  exit;
-fi
+echo "Please enter your domain name:"
+read NGINX_DOMAIN_NAME
+echo "Please enter your email adress (only used for certbot script):"
+read NGINX_EMAIL_ADDRESS
+echo "Please enter the the port that needs to be forwarded:"
+read NGINX_APP_PORT
 
 apt update
+apt install software-properties-common
+add-apt-repository universe
 apt install -y nginx certbot python-certbot-nginx
 
 fuser -k 80/tcp
 service nginx restart
 
-export NGINX_DOMAIN_NAME=$1
-export NGINX_EMAIL_ADDRESS=$2
-export NGINX_APP_PORT=$3
+export NGINX_DOMAIN_NAME=NGINX_DOMAIN_NAME
+export NGINX_EMAIL_ADDRESS=NGINX_EMAIL_ADDRESS
+export NGINX_APP_PORT=NGINX_APP_PORT
 
 # Launch Certbot with the domain name and email address defined in the environment variables
 certbot --nginx certonly -d ${NGINX_DOMAIN_NAME} -m ${NGINX_EMAIL_ADDRESS} --agree-tos --no-eff-email

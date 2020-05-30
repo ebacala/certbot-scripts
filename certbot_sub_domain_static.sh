@@ -8,6 +8,8 @@ echo "Please enter the repertory that will be used to store the static website (
 read NGINX_REPOSITORY
 
 apt update
+apt install software-properties-common
+add-apt-repository universe
 apt install -y nginx certbot python-certbot-nginx
 
 fuser -k 80/tcp
