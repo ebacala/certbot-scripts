@@ -10,7 +10,7 @@ read NGINX_REPOSITORY
 apt update
 apt install software-properties-common
 add-apt-repository universe
-apt install -y nginx certbot python-certbot-nginx
+apt install -y nginx certbot python3-certbot-nginx
 
 fuser -k 80/tcp
 service nginx restart
