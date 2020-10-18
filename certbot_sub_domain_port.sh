@@ -28,8 +28,13 @@ openssl dhparam -out /etc/letsencrypt/live/${NGINX_DOMAIN_NAME}/dhparam.pem 2048
 # Replace the default template file with the environment variables
 envsubst '${NGINX_DOMAIN_NAME} ${NGINX_APP_PORT}' < templates/certbot_sub_domain_port.template > /etc/nginx/sites-available/${NGINX_DOMAIN_NAME}
 ln -s /etc/nginx/sites-available/${NGINX_DOMAIN_NAME} /etc/nginx/sites-enabled/${NGINX_DOMAIN_NAME}
+
 # Copy a new config file
-cp conf/nginx.conf /etc/nginx/nginx.conf
+echo "Do you want to update your nginx global config file? (y/n):"
+read nginx_update_config
+if [[ $nginx_update_config == "y" ]]; then
+    cp conf/nginx.conf /etc/nginx/nginx.conf
+fi
 
 # Reload the nginx configuration
 nginx -s reload
