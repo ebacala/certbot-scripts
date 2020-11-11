@@ -8,7 +8,7 @@ echo "Please enter the the port that needs to be forwarded:"
 read nginx_app_port
 
 apt update
-apt install software-properties-common
+apt install -y software-properties-common
 add-apt-repository universe
 apt install -y nginx certbot python3-certbot-nginx
 
