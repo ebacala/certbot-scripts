@@ -30,10 +30,11 @@ envsubst '${NGINX_DOMAIN_NAME} ${NGINX_APP_PORT}' < templates/certbot_sub_domain
 ln -s /etc/nginx/sites-available/${NGINX_DOMAIN_NAME} /etc/nginx/sites-enabled/${NGINX_DOMAIN_NAME}
 
 # Copy a new config file
-echo "Do you want to update your nginx global config file? (y/n):"
+echo "Do you want to update your nginx global config file (you can see this config file in certbot-scripts/conf/nginx.conf) ? (y/n):"
 read nginx_update_config
 if [[ $nginx_update_config == "y" ]]; then
     cp conf/nginx.conf /etc/nginx/nginx.conf
+    echo "Your nginx global config file has been updated"
 fi
 
 # Reload the nginx configuration
