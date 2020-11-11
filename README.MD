@@ -2,8 +2,8 @@
 
 Two scripts are provided in this repository :
 
--   certbot_sub_domain_port.sh
--   certbot_sub_domain_static.sh
+- certbot_sub_domain_port.sh
+- certbot_sub_domain_static.sh
 
 These scripts use the `certbot` program to generate your SSL certificates and Nginx as your web server.
 
@@ -11,21 +11,21 @@ These scripts use the `certbot` program to generate your SSL certificates and Ng
 
 The script `certbot_sub_domain_port.sh` script allows you to setup HTTPS (SSL/TLS) on a certain forwarded port (useful for API or Docker container for instance).
 
-This script takes 3 arguments :
+This script will ask you 3 information :
 
--   The domain (or sub-domain) of the future URL adress (e.g: myapi.mywebsite.com).
--   An email adress. It'll be used by the the certbot to send you an email in case of an issue with your SSL certificates.
--   The port that need to be forwarded (e.g: 10000).
+- The domain (or sub-domain) of the future URL adress (e.g: myapi.mywebsite.com).
+- An email adress. It'll be used by the the certbot to send you an email in case of an issue with your SSL certificates.
+- The port that need to be forwarded (e.g: 10000).
 
 ## certbot_sub_domain_static.sh
 
 The script `certbot_sub_domain_static.sh` script allows you to setup HTTPS (SSL/TLS) for a static website. This website has to be inside the `/var/www/html/` repertory for it to work.
 
-This script takes 3 arguments :
+This script will ask you 3 information :
 
--   The domain (or sub-domain) of the future URL adress (e.g: myapi.mywebsite.com).
--   An email adress. It'll be used by the the certbot to send you an email in case of an issue with your SSL certificates.
--   The name of the static website repertory inside the `/var/www/html` repertory (e.g: if the path to your website folder is `/var/www/html/mywebsite`, the argument will be `mywebsite`).
+- The domain (or sub-domain) of the future URL adress (e.g: myapi.mywebsite.com).
+- An email adress. It'll be used by the the certbot to send you an email in case of an issue with your SSL certificates.
+- The name of the static website repertory inside the `/var/www/html` repertory (e.g: if the path to your website folder is `/var/www/html/mywebsite`, the argument will be `mywebsite`).
 
 ## Recommndations
 
@@ -35,4 +35,4 @@ Before your run these scripts on your machine, please make sure that you have th
 chmod +x certbot_sub_domain_port.sh certbot_sub_domain_static.sh
 ```
 
-These scripts have only been tested on Ubuntu 18.04.
+These scripts have only been tested on Ubuntu based distros.
