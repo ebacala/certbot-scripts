@@ -26,7 +26,7 @@ This script will ask you 3 information :
 
 - The domain (or sub-domain) of the future URL adress (e.g: myapi.mywebsite.com).
 - An email adress. It'll be used by the the certbot to send you an email in case of an issue with your SSL certificates.
-- The name of the static website repertory inside the `/var/www/html` repertory (e.g: if the path to your website folder is `/var/www/html/mywebsite`, the argument will be `mywebsite`).
+- The name of the static website repertory inside the `/var/www/html` repertory (e.g: if the path to your website folder is `/var/www/html/mywebsite`, you will need to enter `mywebsite`).
 
 ## certbot_delete_config.sh
 
