@@ -12,7 +12,7 @@ These scripts use the `certbot` program to generate your SSL certificates with N
 
 The script `certbot_sub_domain_port.sh` script allows you to setup HTTPS (SSL/TLS) on a certain forwarded port (useful for API or Docker container for instance).
 
-This script will ask you 3 information :
+This script will ask you for 3 information :
 
 - The domain (or sub-domain) of the future URL adress (e.g: myapi.mywebsite.com).
 - An email adress. It'll be used by the the certbot to send you an email in case of an issue with your SSL certificates.
@@ -22,7 +22,7 @@ This script will ask you 3 information :
 
 The script `certbot_sub_domain_static.sh` script allows you to setup HTTPS (SSL/TLS) for a static website. This website has to be inside the `/var/www/html/` repertory for it to work.
 
-This script will ask you 3 information :
+This script will ask you for 3 information :
 
 - The domain (or sub-domain) of the future URL adress (e.g: myapi.mywebsite.com).
 - An email adress. It'll be used by the the certbot to send you an email in case of an issue with your SSL certificates.
@@ -32,11 +32,11 @@ This script will ask you 3 information :
 
 The script `certbot_delete_config.sh` script allows you to delete Let's Encrypt certificates, and the associated files for a specific domain name. Please note that it will also delete the Nginx configuration files (if they bear the same name as the domain)
 
-This script will ask you only one information :
+This script will ask you for only one information :
 
 - The domain (or sub-domain) you wish to delete the Let's Encrypt certificate
 
-## Recommndations
+## Recommandations
 
 Before your run these scripts on your machine, please make sure that you have the execution rights. If not then execute this command :
 
