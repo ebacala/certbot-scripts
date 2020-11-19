@@ -30,9 +30,11 @@ This script will ask you 3 information :
 
 ## certbot_delete_config.sh
 
-The script `certbot_delete_config.sh` script allows you to delete a Let's Encrypt certificate and associated files for a specific domain name.
+The script `certbot_delete_config.sh` script allows you to delete Let's Encrypt certificates, and the associated files for a specific domain name. Please note that it will also delete the Nginx configuration files (if they bear the same name as the domain)
 
-This script will ask you 3 information :
+This script will ask you only one information :
+
+- The domain (or sub-domain) you wish to delete the Let's Encrypt certificate
 
 ## Recommndations
 
