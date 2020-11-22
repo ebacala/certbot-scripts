@@ -31,13 +31,10 @@ openssl dhparam -out /etc/letsencrypt/live/${NGINX_DOMAIN_NAME}/dhparam.pem 2048
 envsubst '${NGINX_DOMAIN_NAME} ${NGINX_APP_PORT}' < $DIR/templates/certbot_sub_domain_port.template > /etc/nginx/sites-available/${NGINX_DOMAIN_NAME}
 ln -s /etc/nginx/sites-available/${NGINX_DOMAIN_NAME} /etc/nginx/sites-enabled/${NGINX_DOMAIN_NAME}
 
-# Copy a new config file
-echo "Do you want to update your nginx global config file (you can see this config file in certbot-scripts/conf/nginx.conf) ? (y/n):"
-read nginx_update_config
-if [[ $nginx_update_config == "y" ]]; then
-    cp $DIR/conf/nginx.conf /etc/nginx/nginx.conf
-    echo "Your nginx global config file has been updated"
-fi
+# Add TLS v1.3 to nginx conf file
+TLS_LINE_NUMBER=$(awk '/ssl_protocols/{ print NR; exit }' /etc/nginx/nginx.conf)
+sed -e "${TLS_LINE_NUMBER}s/;/ TLSv1.3;/" -i /etc/nginx/nginx.conf
+echo "TLS v1.3 added to your nginx global config file"
 
 # Reload the nginx configuration
 nginx -s reload
