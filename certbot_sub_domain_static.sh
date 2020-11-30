@@ -10,7 +10,7 @@ echo "Please enter the repertory that will be used to store the static website (
 read nginx_repository
 
 apt update
-apt install software-properties-common
+apt install -y software-properties-common
 add-apt-repository universe
 apt install -y nginx certbot python3-certbot-nginx
 
