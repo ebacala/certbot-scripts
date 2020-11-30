@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
 
 echo "Please enter your domain name:"
 read nginx_domain_name
@@ -28,14 +28,15 @@ certbot --nginx certonly -d ${NGINX_DOMAIN_NAME} -m ${NGINX_EMAIL_ADDRESS} --agr
 openssl dhparam -out /etc/letsencrypt/live/${NGINX_DOMAIN_NAME}/dhparam.pem 2048
 
 # Replace the default template file with the environment variables
-envsubst '${NGINX_DOMAIN_NAME} ${NGINX_APP_PORT}' < $DIR/templates/certbot_sub_domain_port.template > /etc/nginx/sites-available/${NGINX_DOMAIN_NAME}
+envsubst '${NGINX_DOMAIN_NAME} ${NGINX_APP_PORT}' <$DIR/templates/certbot_sub_domain_port.template >/etc/nginx/sites-available/${NGINX_DOMAIN_NAME}
 ln -s /etc/nginx/sites-available/${NGINX_DOMAIN_NAME} /etc/nginx/sites-enabled/${NGINX_DOMAIN_NAME}
 
-# Add TLS v1.3 to nginx conf file
-TLS_LINE_NUMBER=$(awk '/ssl_protocols/{ print NR; exit }' /etc/nginx/nginx.conf)
-sed -e "${TLS_LINE_NUMBER}s/;/ TLSv1.3;/" -i /etc/nginx/nginx.conf
-echo "TLS v1.3 added to your nginx global config file"
+# Add TLS v1.3 to nginx conf file if not already present
+if grep TLSv1.3 /etc/nginx/nginx.conf file.txt/etc/nginx/nginx.conf; then
+  TLS_LINE_NUMBER=$(awk '/ssl_protocols/{ print NR; exit }' /etc/nginx/nginx.conf)
+  sed -e "${TLS_LINE_NUMBER}s/;/ TLSv1.3;/" -i /etc/nginx/nginx.conf
+  echo "TLS v1.3 added to your nginx global config file"
+fi
 
 # Reload the nginx configuration
 nginx -s reload
-
