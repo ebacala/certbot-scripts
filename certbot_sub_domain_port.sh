@@ -32,7 +32,7 @@ envsubst '${NGINX_DOMAIN_NAME} ${NGINX_APP_PORT}' <$DIR/templates/certbot_sub_do
 ln -s /etc/nginx/sites-available/${NGINX_DOMAIN_NAME} /etc/nginx/sites-enabled/${NGINX_DOMAIN_NAME}
 
 # Add TLS v1.3 to nginx conf file if not already present
-if grep TLSv1.3 /etc/nginx/nginx.conf file.txt/etc/nginx/nginx.conf; then
+if grep TLSv1.3 /etc/nginx/nginx.conf /etc/nginx/nginx.conf; then
   TLS_LINE_NUMBER=$(awk '/ssl_protocols/{ print NR; exit }' /etc/nginx/nginx.conf)
   sed -e "${TLS_LINE_NUMBER}s/;/ TLSv1.3;/" -i /etc/nginx/nginx.conf
   echo "TLS v1.3 added to your nginx global config file"
