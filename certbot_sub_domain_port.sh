@@ -3,11 +3,11 @@
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
 
 echo "Please enter your domain name:"
-read nginx_domain_name
+read -e nginx_domain_name
 echo "Please enter your email adress (only used for certbot script):"
-read nginx_email_address
+read -e nginx_email_address
 echo "Please enter the the port that needs to be forwarded:"
-read nginx_app_port
+read -e nginx_app_port
 
 apt update
 apt install -y software-properties-common

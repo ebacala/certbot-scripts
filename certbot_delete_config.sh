@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "Please enter the name of the config file to delete:"
-read nginx_config_file_name
+read -e nginx_config_file_name
 
 # Delete Let's Encrypt certificate
 certbot delete --cert-name ${nginx_config_file_name}
