@@ -33,6 +33,8 @@ ln -s /etc/nginx/sites-available/${NGINX_DOMAIN_NAME} /etc/nginx/sites-enabled/$
 
 # Add TLS v1.3 to nginx conf file if not already present
 if grep TLSv1.3 /etc/nginx/nginx.conf /etc/nginx/nginx.conf; then
+  echo "TLS v1.3 is already configured in your nginx global config file"
+else
   TLS_LINE_NUMBER=$(awk '/ssl_protocols/{ print NR; exit }' /etc/nginx/nginx.conf)
   sed -e "${TLS_LINE_NUMBER}s/;/ TLSv1.3;/" -i /etc/nginx/nginx.conf
   echo "TLS v1.3 added to your nginx global config file"
