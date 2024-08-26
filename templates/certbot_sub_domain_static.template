@@ -27,9 +27,14 @@ server {
 
         root ${NGINX_REPOSITORY};
         index index.html index.php;
+        error_page 404 /404.html;
 
-	# Location
-	location / {
-                try_files $uri $uri/ /index.html;
-	}
+        # Location
+        location / {
+                try_files $uri $uri/ =404;
+        }
+
+	location = /404.html {
+                internal;
+        }
 }
