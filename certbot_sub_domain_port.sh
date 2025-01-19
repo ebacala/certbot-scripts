@@ -25,22 +25,22 @@ if systemctl is-active --quiet nginx; then
 fi
 
 # Check if cert already exists, only run certbot if it doesn't
-if [ ! -d "/etc/letsencrypt/live/${nginx_domain_name}" ]; then
-  certbot --nginx certonly -d ${nginx_domain_name} -m ${nginx_email_address} --agree-tos --no-eff-email
+if [ ! -d "/etc/letsencrypt/live/${NGINX_DOMAIN_NAME}" ]; then
+  certbot --nginx certonly -d ${NGINX_DOMAIN_NAME} -m ${NGINX_EMAIL_ADDRESS} --agree-tos --no-eff-email
 fi
 
 # Generate DH parameters only if they don't exist
-if [ ! -f "/etc/letsencrypt/live/${nginx_domain_name}/dhparam.pem" ]; then
-  openssl dhparam -out /etc/letsencrypt/live/${nginx_domain_name}/dhparam.pem 2048
+if [ ! -f "/etc/letsencrypt/live/${NGINX_DOMAIN_NAME}/dhparam.pem" ]; then
+  openssl dhparam -out /etc/letsencrypt/live/${NGINX_DOMAIN_NAME}/dhparam.pem 2048
 fi
 
 # Create nginx config only if it doesn't exist or if template is newer
-if [ ! -f "/etc/nginx/sites-available/${nginx_domain_name}" ]; then
-  envsubst '${nginx_domain_name} ${nginx_app_port}' <$DIR/templates/certbot_sub_domain_port.template >/etc/nginx/sites-available/${nginx_domain_name}
+if [ ! -f "/etc/nginx/sites-available/${NGINX_DOMAIN_NAME}" ]; then
+  envsubst '${NGINX_DOMAIN_NAME} ${NGINX_APP_PORT}' <$DIR/templates/certbot_sub_domain_port.template >/etc/nginx/sites-available/${NGINX_DOMAIN_NAME}
 fi
 
 # Create symlink
-ln -nfs /etc/nginx/sites-available/${nginx_domain_name} /etc/nginx/sites-enabled/${nginx_domain_name}
+ln -nfs /etc/nginx/sites-available/${NGINX_DOMAIN_NAME} /etc/nginx/sites-enabled/${NGINX_DOMAIN_NAME}
 
 # Improved TLS v1.3 check and addition
 if ! grep -q "TLSv1.3" /etc/nginx/nginx.conf; then
