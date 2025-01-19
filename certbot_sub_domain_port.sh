@@ -9,6 +9,10 @@ read -e nginx_email_address
 echo "Please enter the the port that needs to be forwarded:"
 read -e nginx_app_port
 
+export NGINX_DOMAIN_NAME=${nginx_domain_name}
+export NGINX_EMAIL_ADDRESS=${nginx_email_address}
+export NGINX_APP_PORT=${nginx_app_port}
+
 apt update
 apt install -y software-properties-common
 add-apt-repository universe

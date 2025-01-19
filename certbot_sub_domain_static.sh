@@ -9,6 +9,10 @@ read -e nginx_email_address
 echo "Please enter the repertory that will be used to store the static website (absolute path):"
 read -e nginx_repository
 
+export NGINX_DOMAIN_NAME=${nginx_domain_name}
+export NGINX_EMAIL_ADDRESS=${nginx_email_address}
+export NGINX_REPOSITORY=${nginx_repository}
+
 apt update
 apt install -y software-properties-common
 add-apt-repository universe
