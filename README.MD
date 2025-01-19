@@ -2,9 +2,9 @@
 
 3 scripts are provided in this repository :
 
-- certbot_sub_domain_port.sh
-- certbot_sub_domain_static.sh
-- certbot_delete_config.sh
+- `certbot_sub_domain_port.sh`
+- `certbot_sub_domain_static.sh`
+- `certbot_delete_config.sh`
 
 These scripts use the `certbot` program to generate your SSL certificates with Nginx as your web server.
 
@@ -14,9 +14,9 @@ The script `certbot_sub_domain_port.sh` script allows you to setup HTTPS (SSL/TL
 
 This script will ask you for 3 information :
 
-- The domain (or sub-domain) of the future URL adress (e.g: myapi.mywebsite.com).
+- The domain (or sub-domain) of the future URL adress (e.g: `myapi.mywebsite.com`).
 - An email adress. It'll be used by the the certbot to send you an email in case of an issue with your SSL certificates.
-- The port that need to be forwarded (e.g: 10000).
+- The port that need to be forwarded (e.g: `10000`).
 
 ## certbot_sub_domain_static.sh
 
@@ -24,7 +24,7 @@ The script `certbot_sub_domain_static.sh` script allows you to setup HTTPS (SSL/
 
 This script will ask you for 3 information :
 
-- The domain (or sub-domain) of the future URL adress (e.g: myapi.mywebsite.com).
+- The domain (or sub-domain) of the future URL adress (e.g: `myapi.mywebsite.com`).
 - An email adress. It'll be used by the the certbot to send you an email in case of an issue with your SSL certificates.
 - The name of the static website repertory inside the `/var/www/html` repertory (e.g: if the path to your website folder is `/var/www/html/mywebsite`, you will need to enter `mywebsite`).
 
@@ -34,13 +34,13 @@ The script `certbot_delete_config.sh` script allows you to delete Let's Encrypt 
 
 This script will ask you for only one information :
 
-- The domain (or sub-domain) you wish to delete the Let's Encrypt certificate
+- The domain (or sub-domain) you wish to delete the Let's Encrypt certificate (e.g: `myapi.mywebsite.com`).
 
 ## Recommandations
 
 Before your run these scripts on your machine, please make sure that you have the execution rights. If not then execute this command :
 
-```
+```bash
 chmod +x certbot_sub_domain_port.sh certbot_sub_domain_static.sh certbot_delete_config.sh
 ```
 

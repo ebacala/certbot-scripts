@@ -7,10 +7,10 @@ read -e nginx_config_file_name
 certbot delete --cert-name ${nginx_config_file_name}
 
 # Delete Nginx configuration file
-rm /etc/nginx/sites-available/${nginx_config_file_name} /etc/nginx/sites-enabled/${nginx_config_file_name}
+rm -f /etc/nginx/sites-available/${nginx_config_file_name} /etc/nginx/sites-enabled/${nginx_config_file_name}
 
 # Delete Let's Encrypt directory for the configuration file name (because dhparams can still be there)
 rm -rf /etc/letsencrypt/live/${nginx_config_file_name}
 
-# Restart Nginx
-service nginx restart
+# Reload Nginx
+nginx -s reload
