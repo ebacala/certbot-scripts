@@ -14,30 +14,44 @@ apt install -y software-properties-common
 add-apt-repository universe
 apt install -y nginx certbot python3-certbot-nginx
 
-fuser -k 80/tcp
-service nginx restart
+# Only kill and restart nginx if it's running
+if systemctl is-active --quiet nginx; then
+  fuser -k 80/tcp
+  service nginx restart
+fi
 
-export NGINX_DOMAIN_NAME=${nginx_domain_name}
-export NGINX_EMAIL_ADDRESS=${nginx_email_address}
-export NGINX_APP_PORT=${nginx_app_port}
+# Check if cert already exists, only run certbot if it doesn't
+if [ ! -d "/etc/letsencrypt/live/${nginx_domain_name}" ]; then
+  certbot --nginx certonly -d ${nginx_domain_name} -m ${nginx_email_address} --agree-tos --no-eff-email
+fi
 
-# Launch Certbot with the domain name and email address defined in the environment variables
-certbot --nginx certonly -d ${NGINX_DOMAIN_NAME} -m ${NGINX_EMAIL_ADDRESS} --agree-tos --no-eff-email
+# Generate DH parameters only if they don't exist
+if [ ! -f "/etc/letsencrypt/live/${nginx_domain_name}/dhparam.pem" ]; then
+  openssl dhparam -out /etc/letsencrypt/live/${nginx_domain_name}/dhparam.pem 2048
+fi
 
-# Generate new DH parameters
-openssl dhparam -out /etc/letsencrypt/live/${NGINX_DOMAIN_NAME}/dhparam.pem 2048
+# Create nginx config only if it doesn't exist or if template is newer
+if [ ! -f "/etc/nginx/sites-available/${nginx_domain_name}" ]; then
+  envsubst '${nginx_domain_name} ${nginx_app_port}' <$DIR/templates/certbot_sub_domain_port.template >/etc/nginx/sites-available/${nginx_domain_name}
+fi
 
-# Replace the default template file with the environment variables
-envsubst '${NGINX_DOMAIN_NAME} ${NGINX_APP_PORT}' <$DIR/templates/certbot_sub_domain_port.template >/etc/nginx/sites-available/${NGINX_DOMAIN_NAME}
-ln -s /etc/nginx/sites-available/${NGINX_DOMAIN_NAME} /etc/nginx/sites-enabled/${NGINX_DOMAIN_NAME}
+# Create symlink
+ln -nfs /etc/nginx/sites-available/${nginx_domain_name} /etc/nginx/sites-enabled/${nginx_domain_name}
 
-# Add TLS v1.3 to nginx conf file if not already present
-if grep TLSv1.3 /etc/nginx/nginx.conf /etc/nginx/nginx.conf; then
-  echo "TLS v1.3 is already configured in your nginx global config file"
+# Improved TLS v1.3 check and addition
+if ! grep -q "TLSv1.3" /etc/nginx/nginx.conf; then
+  if grep -q "ssl_protocols" /etc/nginx/nginx.conf; then
+    # Only add TLSv1.3 if it's not already in the ssl_protocols line
+    TLS_LINE_NUMBER=$(awk '/ssl_protocols/{ print NR; exit }' /etc/nginx/nginx.conf)
+    sed -i "${TLS_LINE_NUMBER}s/;/ TLSv1.3;/" /etc/nginx/nginx.conf
+    echo "TLS v1.3 added to your nginx global config file"
+  else
+    # If ssl_protocols line doesn't exist, add it
+    echo "ssl_protocols TLSv1.2 TLSv1.3;" >>/etc/nginx/nginx.conf
+    echo "Added ssl_protocols with TLS v1.3 to nginx global config file"
+  fi
 else
-  TLS_LINE_NUMBER=$(awk '/ssl_protocols/{ print NR; exit }' /etc/nginx/nginx.conf)
-  sed -e "${TLS_LINE_NUMBER}s/;/ TLSv1.3;/" -i /etc/nginx/nginx.conf
-  echo "TLS v1.3 added to your nginx global config file"
+  echo "TLS v1.3 is already configured in your nginx global config file"
 fi
 
 # Reload the nginx configuration
